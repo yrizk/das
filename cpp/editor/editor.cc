@@ -2,9 +2,8 @@
 #include <iostream>
 
 using namespace std;
-
 Editor::Editor() {
-  buffer_ = make_shared<Buffer>();
+  buffer_ = Buffer();
   cursor_ = make_shared<Cursor>();
 }
 
@@ -14,6 +13,9 @@ void Editor::Open(string filepath) {
 
 void Editor::Close() {
   cout << "Empty implementation for close()" << endl;
-  delete &buffer_;
-  delete &cursor_;
+}
+
+Editor::~Editor() {
+  //delete &buffer_;
+  //delete &cursor_;
 }

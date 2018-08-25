@@ -2,7 +2,7 @@
 #define BUFFER_H
 class Buffer {
  public:
-  Buffer() = default;
-  virtual ~Buffer();
+  Buffer() {};
+  virtual ~Buffer() {};
 };
 #endif  // BUFFER_H

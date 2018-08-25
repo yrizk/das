@@ -4,7 +4,7 @@
 class Cursor {
  public:
   Cursor(int r = 0, int c = 0);
-  virtual ~Cursor();
+  virtual ~Cursor() {};
 
  private:
   int row_;
