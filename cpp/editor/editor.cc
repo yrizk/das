@@ -15,7 +15,4 @@ void Editor::Close() {
   cout << "Empty implementation for close()" << endl;
 }
 
-Editor::~Editor() {
-  //delete &buffer_;
-  //delete &cursor_;
-}
+Editor::~Editor() {}
