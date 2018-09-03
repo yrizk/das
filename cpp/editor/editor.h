@@ -12,7 +12,7 @@ class Editor {
   Editor();
   ~Editor();
   // pure virtual: opens the content of the file.
-  void Open(std::string filepath);
+  void Open(string filepath);
   // pure virtual: just closes the open buffer, and tears down the member
   // variables.
   void Close();
