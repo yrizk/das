@@ -1,18 +1,21 @@
 #include "editor.h"
 #include <termios.h>
-#include <unistd.h>  // for isatty()
+#include <unistd.h>  // for isatty() and write()
 #include <fstream>
 #include <iostream>
 
 using namespace std;
 
+static int STDOUTFILENO = 0;
 static struct termios orig_termios;
+
 Editor::Editor() {
   buffer_ = Buffer();
   cursor_ = make_shared<Cursor>();
 }
 
 void Editor::Close() { cout << "Empty implementation for close()" << endl; }
+
 
 // creates a buffer with the minimum size.
 string read_file(string filepath) {
@@ -25,9 +28,22 @@ string read_file(string filepath) {
   return content;
 }
 
-void Editor::Open(string filepath) {
+string load(string filepath) {
   string content = read_file(filepath);
-  cout << "Content of file: " << content << endl;
+  size_t index = content.find("\r\n");
+  cout << "clrf: " << index << endl;
+  while (index > -1) {
+      cout << "found one";
+      content.replace(index, 2, "");
+      index = content.find("\n");
+  }
+  return content; 
+}
+
+void Editor::Open(string filepath) {
+  string content = load(filepath);
+  //printf(content.c_str());
+  write(STDOUTFILENO, content.c_str(), content.size());
 }
 
 Editor::~Editor() {}
@@ -38,12 +54,12 @@ void fatal(string msg) {
 }
 
 void check_valid_tty() {
-  if (!isatty(0)) fatal("not running on a tty session");
+  if (!isatty(STDOUTFILENO)) fatal("not running on a tty session");
 }
 
 // saves the current tty settings into orig_termios settings.
 void save_current_tty_settings() {
-  if (tcgetattr(0, &orig_termios) < 0) fatal("can't get tty settings.");
+  if (tcgetattr(STDOUTFILENO, &orig_termios) < STDOUTFILENO) fatal("can't get tty settings.");
 }
 
 void enter_raw_mode() {

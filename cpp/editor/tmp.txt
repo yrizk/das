@@ -1,1 +1,5 @@
 hello this is tmp.txt
+this is the second line.
+
+
+this is the 3rd line of text.
